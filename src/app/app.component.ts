@@ -37,6 +37,8 @@ export class AppComponent {
         this.serverData.closeRequest(requestId).subscribe(() => this.loadRequests());
     }
 
+    floorNum(num) { return Math.round(num * 100) / 100 }
+
 
     writeDoctorComment(request: PatientRequest) {
         // TODO Zana Begoli
