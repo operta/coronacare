@@ -2,6 +2,7 @@ export class PatientRequest {
   id: number;
   patient_email: string;
   patient_id: number;
+  patientComment: string;
   doctorComment: string;
   isPositive: boolean;
   isClosed: boolean;

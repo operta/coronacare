@@ -1,47 +1,57 @@
-
-
 <div class="container mt-5">
     <div class="row">
         <div class="col-12">
             <table class="table">
                 <thead>
                 <tr>
-                  <th scope="col">Patient</th>
-                  <th scope="col">Temperature</th>
-                  <th scope="col">Cough</th>
-                  <th scope="col">Fever</th>
-                  <th scope="col">Shortness of breath</th>
-                  <th scope="col">Muscle pain</th>
-                  <th scope="col">Sore throat</th>
-                  <th scope="col">Loss of taste or smell</th>
-                  <th scope="col">Contact with corona case</th>
-                  <th scope="col">Corona status</th>
-                  <th scope="col">Actions</th>
+                    <th scope="col">Patient</th>
+                    <th scope="col">Patient Comment</th>
+                    <th scope="col">Temperature</th>
+                    <th scope="col">Cough</th>
+                    <th scope="col">Fever</th>
+                    <th scope="col">Shortness of breath</th>
+                    <th scope="col">Muscle pain</th>
+                    <th scope="col">Sore throat</th>
+                    <th scope="col">Loss of taste or smell</th>
+                    <th scope="col">Contact with corona case</th>
+                    <th scope="col">Corona status</th>
+                    <th scope="col">Doctor's report</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr [ngClass]="item.isClosed ? 'border-red' : ''"  *ngFor="let item of requests$ | async">
+                <tr [ngClass]="item.isClosed ? 'border-red' : ''" *ngFor="let item of requests$ | async">
 
-                  <td>{{item.patient_email}}</td>
-                  <td>{{floorNum(item.temperature)}} C</td>
-                  <td>{{item.hasCough}}</td>
-                  <td>{{item.hasFever}}</td>
-                  <td>{{item.hasShortnessOfBreath}}</td>
-                  <td>{{item.hasMusclePain}}</td>
-                  <td>{{item.hasSoreThroat}}</td>
-                  <td>{{item.hasLossOfTasteOrSmell}}</td>
-                  <td>{{item.hasContactWithCoronaCase}}</td>
+                    <td>{{item.patient_email}}</td>
+                    <td>{{item.patientComment}}</td>
+                    <td>{{floorNum(item.temperature)}} C</td>
+                    <td>{{item.hasCough}}</td>
+                    <td>{{item.hasFever}}</td>
+                    <td>{{item.hasShortnessOfBreath}}</td>
+                    <td>{{item.hasMusclePain}}</td>
+                    <td>{{item.hasSoreThroat}}</td>
+                    <td>{{item.hasLossOfTasteOrSmell}}</td>
+                    <td>{{item.hasContactWithCoronaCase}}</td>
                     <td>
                         <span *ngIf="item.isSuspect">Suspect</span>
                         <span *ngIf="item.isPositive">Positive</span>
                         <span *ngIf="!item.isPositive && item.isClosed">Negative</span></td>
-                  <td>
-                      <button class="btn btn-success" *ngIf="!item.simulate && !item.isClosed" (click)="sendEmergency(item)">Send Medical Team to test patient</button>
-                      <button class="btn btn-success" *ngIf="item.simulate" >Simulating medical team trip and testing</button>
-                      <button class="btn btn-danger" *ngIf="!item.isClosed" (click)="notCorona(item.id)">Reject (Not Corona)</button>
-                      <button class="btn btn-success" *ngIf="item.isPositive
-                      && item.isClosed && !item.hasRecommendation" (click)="writeDoctorComment(item)">Doctor comment</button>
-                  </td>
+                    <td><span *ngIf="item.isPositive
+                      && item.isClosed && !item.hasRecommendation">
+                        <textarea [(ngModel)]="item.doctorComment" rows="5"></textarea>
+                    </span><span *ngIf="item.hasRecommendation">{{item.doctorComment}}</span></td>
+                    <td>
+                    <button class="btn btn-success" *ngIf="!item.simulate && !item.isClosed"
+                            (click)="sendEmergency(item)">Send Medical Team to test patient
+                    </button>
+                    <button class="btn btn-success" *ngIf="item.simulate">Simulating medical team trip and testing
+                    </button>
+                    <button class="btn btn-danger" *ngIf="!item.isClosed" (click)="notCorona(item.id)">Reject (Not
+                        Corona)
+                    </button>
+                    <button class="btn btn-success" *ngIf="item.doctorComment && !item.hasRecommendation" (click)="writeDoctorComment(item)">Send doctor comment
+                    </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

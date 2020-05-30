@@ -21,5 +21,9 @@ export class HttpService {
     return this.http.put(`${SERVER_URL}/simulate-test/${requestId}`, null);
   }
 
+  sendDoctorReport(requestId: number, message: string) {
+      return this.http.put(`${SERVER_URL}/doctor-report/${requestId}/${message}`, null)
+  }
+
 }
 

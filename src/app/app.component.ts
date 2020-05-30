@@ -29,7 +29,8 @@ export class AppComponent {
                 request.simulate = false;
                 this.loadRequests();
             });
-        }, 60000 * Math.random() * (15 - 1) + 1);
+        // }, 60000 * Math.random() * (15 - 1) + 1);
+        }, 1 * Math.random() * (15 - 1) + 1);
 
     }
 
@@ -41,9 +42,8 @@ export class AppComponent {
 
 
     writeDoctorComment(request: PatientRequest) {
-        // TODO Zana Begoli
-        request.doctorComment = 'Test doctor comment';
-        // this.serverData.closeRequest(request).subscribe(() => this.loadRequests());
+        // TODO Zana Begoli part
+        this.serverData.sendDoctorReport(request.id, request.doctorComment).subscribe(() => this.loadRequests());
     }
 
 
